@@ -13,14 +13,14 @@
       <img src="https://freepnglogo.com/images/all_img/1716830593playstation-Logo-png-white.png" alt="PlayStation Logo" class="playstation-logo">
     </div>
     <h2>Iniciar sesión</h2>
-    <form id="login">
+    <form id="login" action="login.php" method="POST">
       <div class="form-group">
         <label for="email">ID de inicio de sesión (correo electrónico)</label>
-        <input type="email" id="email" placeholder="Ingresa tu correo" required>
+        <input type="email" id="email" name="email" placeholder="Ingresa tu correo" required>
       </div>
       <div class="form-group">
         <label for="password">Contraseña</label>
-        <input type="password" id="password" placeholder="Ingresa tu contraseña" required>
+        <input type="password" id="password" name="password" placeholder="Ingresa tu contraseña" required>
       </div>
       <input type="submit" value="Iniciar sesión">
     </form>
@@ -35,14 +35,14 @@
       <button class="close-btn" id="volverLoginLink">×</button>
     </div>
     <h2>Crear una cuenta</h2>
-    <form id="register">
+    <form id="register" action="register.php" method="POST">
       <div class="form-group">
         <label for="dob">Fecha de nacimiento</label>
-        <input type="date" id="dob" required>
+        <input type="date" id="dob" name="dob" required>
       </div>
       <div class="form-group">
         <label for="region">Región</label>
-        <select id="region" required>
+        <select id="region" name="region" required>
           <option value="america">América</option>
           <option value="europa">Europa</option>
           <option value="asia">Asia</option>
@@ -51,32 +51,22 @@
       </div>
       <div class="form-group">
         <label for="emailCreate">Correo electrónico</label>
-        <input type="email" id="emailCreate" placeholder="Ingresa tu correo" required>
+        <input type="email" id="emailCreate" name="emailCreate" placeholder="Ingresa tu correo" required>
       </div>
       <div class="form-group">
         <label for="passwordCreate">Contraseña</label>
-        <input type="password" id="passwordCreate" placeholder="Crea una contraseña" required>
+        <input type="password" id="passwordCreate" name="passwordCreate" placeholder="Crea una contraseña" required>
       </div>
       <input type="submit" value="Registrar">
     </form>
   </div>
 
-  <!-- Contenedor de mensaje -->
-  <div class="container" id="messageBox" style="display: none;">
-    <h2 id="messageTitle"></h2>
-    <p id="messageContent"></p>
-    <button id="returnToLogin">Regresar al inicio</button>
-  </div>
-
+  <!-- Script para manejar los formularios -->
   <script>
     const loginForm = document.getElementById('loginForm');
     const crearCuentaForm = document.getElementById('crearCuentaForm');
-    const messageBox = document.getElementById('messageBox');
     const crearCuentaLink = document.getElementById('crearCuentaLink');
     const volverLoginLink = document.getElementById('volverLoginLink');
-    const returnToLogin = document.getElementById('returnToLogin');
-    const messageTitle = document.getElementById('messageTitle');
-    const messageContent = document.getElementById('messageContent');
 
     // Mostrar formulario de crear cuenta
     crearCuentaLink.addEventListener('click', (e) => {
@@ -91,30 +81,30 @@
       crearCuentaForm.style.display = 'none';
       loginForm.style.display = 'block';
     });
+  </script>
 
-    // Mostrar mensaje después de iniciar sesión
-    document.getElementById('login').addEventListener('submit', (e) => {
-      e.preventDefault();
-      loginForm.style.display = 'none';
-      messageBox.style.display = 'block';
-      messageTitle.textContent = 'Inicio de sesión exitoso';
-      messageContent.textContent = 'Bienvenido a PlayStation.';
-    });
+  <!-- Firebase Configuration -->
+  <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-app.js";
+    import { getAuth } from "https://www.gstatic.com/firebasejs/10.3.0/firebase-auth.js";
 
-    // Mostrar mensaje después de registrar un usuario
-    document.getElementById('register').addEventListener('submit', (e) => {
-      e.preventDefault();
-      crearCuentaForm.style.display = 'none';
-      messageBox.style.display = 'block';
-      messageTitle.textContent = 'Registro exitoso';
-      messageContent.textContent = 'Tu cuenta ha sido creada con éxito.';
-    });
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "TU_API_KEY",
+      authDomain: "TU_AUTH_DOMAIN",
+      projectId: "TU_PROJECT_ID",
+      storageBucket: "TU_STORAGE_BUCKET",
+      messagingSenderId: "TU_MESSAGING_SENDER_ID",
+      appId: "TU_APP_ID",
+      measurementId: "TU_MEASUREMENT_ID"
+    };
 
-    // Regresar al inicio de sesión
-    returnToLogin.addEventListener('click', () => {
-      messageBox.style.display = 'none';
-      loginForm.style.display = 'block';
-    });
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    console.log("Firebase inicializado correctamente.");
   </script>
 </body>
 </html>
