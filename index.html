@@ -5,7 +5,62 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>PlayStation</title>
   <link rel="stylesheet" href="styles.css">
-  <script type="module" src="app.js" defer></script> <!-- Importa tu script de Firebase -->
+
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+    import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-auth.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBbNVFNN9CoFUf4DrCJsOXHxnc2KpnEW58",
+      authDomain: "sony-33aa4.firebaseapp.com",
+      projectId: "sony-33aa4",
+      storageBucket: "sony-33aa4.firebasestorage.app",
+      messagingSenderId: "609062779229",
+      appId: "1:609062779229:web:1a7910e911ecb4edefd0b4"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+
+    // Función para crear cuenta
+    const registerForm = document.getElementById('register');
+    registerForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('emailCreate').value;
+      const password = document.getElementById('passwordCreate').value;
+
+      createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          alert("Cuenta creada con éxito");
+          console.log('Usuario creado:', user);
+        })
+        .catch((error) => {
+          alert("Error al crear cuenta: " + error.message);
+          console.error(error);
+        });
+    });
+
+    // Función para iniciar sesión
+    const loginForm = document.getElementById('login');
+    loginForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('email').value;
+      const password = document.getElementById('password').value;
+
+      signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+          const user = userCredential.user;
+          alert("Inicio de sesión exitoso");
+          console.log('Usuario autenticado:', user);
+        })
+        .catch((error) => {
+          alert("Error al iniciar sesión: " + error.message);
+          console.error(error);
+        });
+    });
+  </script>
 </head>
 <body>
   <!-- Contenedor de inicio de sesión -->
@@ -14,7 +69,7 @@
       <img src="https://freepnglogo.com/images/all_img/1716830593playstation-Logo-png-white.png" alt="PlayStation Logo" class="playstation-logo">
     </div>
     <h2>Iniciar sesión</h2>
-    <form id="login" action="#" method="POST">
+    <form id="login" action="login.php" method="POST">
       <div class="form-group">
         <label for="email">ID de inicio de sesión (correo electrónico)</label>
         <input type="email" id="email" name="email" placeholder="Ingresa tu correo" required>
@@ -36,7 +91,7 @@
       <button class="close-btn" id="volverLoginLink">×</button>
     </div>
     <h2>Crear una cuenta</h2>
-    <form id="register" action="#" method="POST">
+    <form id="register" action="register.php" method="POST">
       <div class="form-group">
         <label for="dob">Fecha de nacimiento</label>
         <input type="date" id="dob" name="dob" required>
@@ -61,5 +116,26 @@
       <input type="submit" value="Registrar">
     </form>
   </div>
+
+  <script>
+    const loginForm = document.getElementById('loginForm');
+    const crearCuentaForm = document.getElementById('crearCuentaForm');
+    const crearCuentaLink = document.getElementById('crearCuentaLink');
+    const volverLoginLink = document.getElementById('volverLoginLink');
+
+    // Mostrar formulario de crear cuenta
+    crearCuentaLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      loginForm.style.display = 'none';
+      crearCuentaForm.style.display = 'block';
+    });
+
+    // Volver al formulario de inicio de sesión
+    volverLoginLink.addEventListener('click', (e) => {
+      e.preventDefault();
+      crearCuentaForm.style.display = 'none';
+      loginForm.style.display = 'block';
+    });
+  </script>
 </body>
 </html>
