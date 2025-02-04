@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>San Valentín 💙</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="login-container" id="login">
+        <h2>Inicia sesión</h2>
+        <input type="text" placeholder="Usuario" id="user">
+        <input type="password" placeholder="Contraseña" id="pass">
+        <button onclick="login()">Entrar</button>
+        <p id="error-message" style="color: red;"></p>
+    </div>
+    
+    <div class="question-container" id="question" style="display: none;">
+        <h2>¿Quieres ser mi San Valentín? 💖</h2>
+        <button onclick="confirmChoice(true)">Sí</button>
+        <button onclick="confirmChoice(false)">No</button>
+    </div>
+    
+    <script type="module">
+      // Import the functions you need from the SDKs you need
+      import { initializeApp } from "https://www.gstatic.com/firebasejs/11.2.0/firebase-app.js";
+      // TODO: Add SDKs for Firebase products that you want to use
+      // https://firebase.google.com/docs/web/setup#available-libraries
+    
+      // Your web app's Firebase configuration
+      const firebaseConfig = {
+        apiKey: "AIzaSyCH6kXtB45PtY6CKlOjuFIHIocJCmf4JO8",
+        authDomain: "novia-ddba0.firebaseapp.com",
+        projectId: "novia-ddba0",
+        storageBucket: "novia-ddba0.firebasestorage.app",
+        messagingSenderId: "75563596669",
+        appId: "1:75563596669:web:768e27ff593074fd886a14"
+      };
+    
+      // Initialize Firebase
+      const app = initializeApp(firebaseConfig);
+    </script>
+    
+    <script>
+        function login() {
+            const user = document.getElementById("user").value;
+            const pass = document.getElementById("pass").value;
+            
+            if (user.trim() === "" || pass.trim() === "") {
+                document.getElementById("error-message").innerText = "Por favor, ingresa usuario y contraseña.";
+                return;
+            }
+            
+            document.getElementById('login').style.display = 'none';
+            document.getElementById('question').style.display = 'block';
+        }
+        
+        function confirmChoice(isYes) {
+            if (!isYes) {
+                if (confirm("¿Segura? 🥺")) {
+                    confirmChoice(false);
+                }
+            } else {
+                window.location.href = "valentine.html";
+            }
+        }
+    </script>
+</body>
+</html>
